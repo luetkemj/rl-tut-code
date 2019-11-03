@@ -6,7 +6,12 @@ const canvas = document.querySelector("#game");
 
 const width = 80;
 const height = 50;
-const player = new Entity(Math.floor(width / 2), Math.floor(height / 2));
+const player = new Entity(
+  Math.floor(width / 2),
+  Math.floor(height / 2),
+  "player"
+);
+
 const stage = new Stage(width, height, player);
 
 let action;
@@ -35,9 +40,8 @@ function update() {
     const mx = stage.player.x + action.x;
     const my = stage.player.y + action.y;
 
-    if (stage.canMoveTo(mx, my)) {
-      stage.player.x = Math.min(width - 1, Math.max(0, mx));
-      stage.player.y = Math.min(height - 1, Math.max(0, my));
+    if (stage.canMoveTo(mx, my) && stage.isUnoccupied(x, y)) {
+      stage.moveEntityTo(player, mx, my);
       stage.refreshVisibility();
     }
 

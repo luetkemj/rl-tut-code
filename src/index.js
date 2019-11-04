@@ -40,7 +40,7 @@ function update() {
     const mx = stage.player.x + action.x;
     const my = stage.player.y + action.y;
 
-    if (stage.canMoveTo(mx, my) && stage.isUnoccupied(x, y)) {
+    if (stage.canMoveTo(mx, my) && stage.isUnoccupied(mx, my)) {
       stage.moveEntityTo(player, mx, my);
       stage.refreshVisibility();
     }

@@ -33,7 +33,9 @@ class Stage {
     for (let r = 1; r < rooms.length; r++) {
       if (Math.random() > 0.6) continue;
       const spawnAt = rooms[r].center();
-      this.addEntity(new Entity(spawnAt.x, spawnAt.y, "monster"));
+      this.addEntity(
+        new Entity(spawnAt.x, spawnAt.y, "monster", { blocking: true })
+      );
     }
   }
 

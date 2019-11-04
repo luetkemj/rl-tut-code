@@ -1,6 +1,7 @@
 import Screen from "./screen";
 import Entity from "./entity";
 import Stage from "./stage";
+import Fightable from "./fightable";
 
 const canvas = document.querySelector("#game");
 
@@ -9,7 +10,9 @@ const height = 50;
 const player = new Entity(
   Math.floor(width / 2),
   Math.floor(height / 2),
-  "player"
+  "player",
+  {},
+  new Fightable(30, 10, 10)
 );
 
 const stage = new Stage(width, height, player);

@@ -104,6 +104,10 @@ class Stage {
   isUnoccupied(x, y) {
     return !this.entitiesMap[y][x].some(e => e.isBlocking());
   }
+
+  entitiesAt(x, y) {
+    return this.entitiesMap[y][x];
+  }
 }
 
 export default Stage;

@@ -35,24 +35,40 @@ function input(key) {
 
 document.addEventListener("keydown", ev => input(ev.key));
 
-function update() {
-  if (action) {
-    const mx = stage.player.x + action.x;
-    const my = stage.player.y + action.y;
+function handleAction(action) {
+  const mx = stage.player.x + action.x;
+  const my = stage.player.y + action.y;
 
-    if (stage.canMoveTo(mx, my) && stage.isUnoccupied(mx, my)) {
-      stage.moveEntityTo(player, mx, my);
-      stage.refreshVisibility();
+  if (stage.canMoveTo(mx, my)) {
+    for (let occupant of stage.entitiesAt(mx, my)) {
+      if (occupant.isBlocking()) {
+        stage.player.bump(occupant);
+        return;
+      }
     }
 
-    action = null;
+    stage.moveEntityTo(player, mx, my);
+    stage.refreshVisibility();
   }
 }
 
-function render() {
-  grid.clear();
-  grid.writeCell(player.x, player.y, Cell("@"));
-  grid.render();
+let playerTurn = true;
+
+function update() {
+  if (action && playerTurn) {
+    handleAction(action);
+    action = null;
+    playerTurn = false;
+  }
+
+  if (!playerTurn) {
+    for (let entity of stage.entities) {
+      if (entity !== stage.player) {
+        entity.takeTurn();
+      }
+    }
+    playerTurn = true;
+  }
 }
 
 const screen = new Screen(canvas, width, height);

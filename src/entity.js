@@ -14,6 +14,14 @@ class Entity {
   isBlocking() {
     return this.flags.blocking;
   }
+
+  bump(target) {
+    console.log(`${this.name} kicks ${target.name} in the shins`);
+  }
+
+  takeTurn() {
+    console.log(`${this.name} ponders the meaning of its existence`);
+  }
 }
 
 export default Entity;

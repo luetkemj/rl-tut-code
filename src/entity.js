@@ -3,16 +3,16 @@ const defaultFlags = {
 };
 
 class Entity {
-  constructor(x, y, name, flags, fightable) {
+  constructor(x, y, name, flags, components) {
     this.x = x;
     this.y = y;
     this.name = name;
     this.flags = { ...flags };
     this.action = null;
 
-    if (fightable) {
-      this.fightable = fightable;
-      this.fightable.owner = this;
+    for (let attribute of Object.keys(components)) {
+      this[attribute] = components[attribute];
+      this[attribute].owner = this;
     }
   }
 
@@ -30,8 +30,12 @@ class Entity {
     }
   }
 
-  takeTurn() {
-    console.log(`${this.name} ponders the meaning of its existence`);
+  hasVolition() {
+    return this.hasOwnProperty("volition");
+  }
+
+  takeTurn(stage) {
+    this.volition.takeTurn(stage);
   }
 }
 

@@ -2,6 +2,7 @@ import Screen from "./screen";
 import Entity from "./entity";
 import Stage from "./stage";
 import Fightable from "./fightable";
+import Volition from "./volition";
 
 const canvas = document.querySelector("#game");
 
@@ -12,7 +13,9 @@ const player = new Entity(
   Math.floor(height / 2),
   "player",
   {},
-  new Fightable(30, 10, 10)
+  {
+    fightable: new Fightable(30, 10, 10)
+  }
 );
 
 const stage = new Stage(width, height, player);
@@ -66,8 +69,8 @@ function update() {
 
   if (!playerTurn) {
     for (let entity of stage.entities) {
-      if (entity !== stage.player) {
-        entity.takeTurn();
+      if (entity.hasVolition()) {
+        entity.takeTurn(stage);
       }
     }
     playerTurn = true;

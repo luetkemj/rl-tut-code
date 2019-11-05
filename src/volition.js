@@ -1,8 +1,12 @@
-import { drunkenWalk } from "./behavior";
+import { drunkenWalk, meleeCharge } from "./behavior";
 
 class Volition {
   takeTurn(stage) {
-    drunkenWalk(this.owner, stage);
+    if (stage.isVisible(this.owner.x, this.owner.y)) {
+      meleeCharge(this.owner, stage.player, stage);
+    } else {
+      drunkenWalk(this.owner, stage);
+    }
   }
 }
 

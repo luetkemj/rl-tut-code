@@ -1,7 +1,7 @@
 import { generateDungeon } from "./dungeon";
 import { createFOV } from "./fov";
-import Entity from "./entity";
 import { spawnMonster } from "./monsters";
+import Directions from "./directions";
 
 class Stage {
   constructor(width, height, player) {
@@ -106,6 +106,29 @@ class Stage {
 
   entitiesAt(x, y) {
     return this.entitiesMap[y][x];
+  }
+
+  adjacentPoints(x, y) {
+    const points = [];
+    for (let direction of Directions.CARDINAL) {
+      let candidate = {
+        x: x + direction.x,
+        y: y + direction.y
+      };
+      if (
+        candidate.x >= 0 &&
+        candidate.x < this.width &&
+        candidate.y >= 0 &&
+        candidate.y < this.height
+      ) {
+        points.push(candidate);
+      }
+    }
+    return points;
+  }
+
+  movementCost(x, y) {
+    return this.isUnoccupied(x, y) ? 1 : 5;
   }
 }
 
